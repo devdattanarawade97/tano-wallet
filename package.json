@@ -13,6 +13,8 @@
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@tonconnect/ui": "^2.0.9",
+		"@tonconnect/ui-react": "^2.0.9",
 		"bootstrap": "^5.3.3",
 		"svelte": "^4.2.7",
 		"svelte-check": "^3.6.0",
