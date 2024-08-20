@@ -2,6 +2,9 @@
     import { onMount } from 'svelte';
     import { TonConnectUI } from '@tonconnect/ui';
 
+    /**
+	 * @type {TonConnectUI}
+	 */
     let tonConnectUI;
 
     onMount(() => {
@@ -18,6 +21,22 @@
             twaReturnUrl: 'https://t.me/tele_block_ai_bot'
         }
     });
+
+  
+
+    async function pay() {
+
+        const transaction = {
+    messages: [
+        {
+            address: "0:412410771DA82CBA306A55FA9E0D43C9D245E38133CB58F1457DFB8D5CD8892F", // destination address
+            amount: "20000000" //Toncoin in nanotons
+        }
+    ]
+}
+
+  const result = await tonConnectUI.sendTransaction(transaction)
+    }
 </script>
 
 <main>
@@ -33,7 +52,7 @@
 
     <!-- Action buttons -->
     <div class="d-flex justify-content-center align-items-center" id="button-header">
-        <button class="mx-5 my-5 rounded-3 bg-primary text-white p-2 px-5">Pay</button>
+        <button class="mx-5 my-5 rounded-3 bg-primary text-white p-2 px-5" on:click={pay}>Pay</button>
         <button class="mx-5 my-5 rounded-3 bg-primary text-white p-2 px-5">Add</button>
     </div>
 
