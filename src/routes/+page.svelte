@@ -78,31 +78,88 @@
 		console.log("transaction result : ", result);
 	}
 </script>
-
-<main class="bg-black text-white vh-100">
+<main class="bg-main-gradient vh-100 d-flex flex-column justify-content-between align-items-center text-white">
 	<!-- Header with Connect Wallet button -->
-
-	<div class="d-flex justify-content-end py-2" id="header">
-		<button id="ton-connect" class="border-white bg-primary rounded py-1"
-		></button>
+	<div class="d-flex justify-content-end py-3 w-100 px-4" id="header">
+		<button id="ton-connect" class="connect-button shadow-lg"></button>
 	</div>
 
 	<!-- Main content -->
-	<h1 class="text-center my-5">Welcome to Tano Wallet</h1>
-	<!-- <h3 class="text-center">Estimated Gas Fee: {gasFee}</h3> -->
+	<h1 class="text-center my-5 display-4 text-glow text-shade">Welcome to Tano Wallet</h1>
 
 	<!-- Action buttons -->
-	<div
-		class="d-flex justify-content-center align-items-center"
-		id="button-header"
-	>
-		<button
-			class="mx-5 my-5 rounded-5 fs-6 fw-bold bg-primary text-white py-2 px-5 w-auto border-white"
-			on:click={pay}>Pay</button
-		>
+	<div class="d-flex justify-content-center align-items-center" id="button-header">
+		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold" on:click={pay}>Pay</button>
 	</div>
 
-	<footer class="text-center">
-		<h4>Powered By Tano</h4>
+	<!-- Footer -->
+	<footer class="text-center w-100 py-3 bg-footer-gradient">
+		<h4 class="text-shadow">Powered By Tano</h4>
 	</footer>
 </main>
+
+<style>
+	/* Gradient background for the main container */
+	.bg-main-gradient {
+		background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+		background-size: 300% 300%;
+		animation: gradientBG 15s ease infinite;
+	}
+
+	/* Gradient animation */
+	@keyframes gradientBG {
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
+	}
+
+	/* Glowing text effect */
+	.text-glow {
+		color: #fff;
+		text-shadow: 0 0 10px #ff6f61, 0 0 20px #ff6f61, 0 0 30px #ff6f61, 0 0 40px #ff6f61;
+	}
+
+	/* Shading effect for the text */
+	.text-shade {
+		text-shadow: 
+			2px 2px 4px rgba(0, 0, 0, 0.5), /* Darker shadow */
+			-1px -1px 2px rgba(255, 255, 255, 0.3); /* Lighter highlight */
+	}
+
+	/* Button styles */
+	.connect-button, .pay-button {
+		background: linear-gradient(45deg, #ff6f61, #ff9a8b);
+		border: none;
+		border-radius: 50px;
+		padding: 0.7rem 1.5rem;
+		color: white;
+		font-weight: bold;
+		cursor: pointer;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.connect-button:hover, .pay-button:hover {
+		transform: translateY(-3px);
+		box-shadow: 0px 5px 20px rgba(255, 105, 135, 0.4);
+	}
+
+	/* Footer gradient */
+	.bg-footer-gradient {
+		background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+	}
+
+	/* Text shadow for footer text */
+	.text-shadow {
+		text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	/* For mobile responsiveness */
+	@media (max-width: 768px) {
+		.display-4 {
+			font-size: 2.5rem;
+		}
+		.connect-button, .pay-button {
+			padding: 0.6rem 1.2rem;
+		}
+	}
+</style>
