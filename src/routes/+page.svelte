@@ -5,12 +5,13 @@
 	import {PUBLIC_CREDIT_ADDRESS}  from "$env/static/public";
 
 
+
 	/**
 	 * @type {TonConnectUI}
 	 */
 	let tonConnectUI;
 	let currentConnectWalletAddress = "";
-	// let walletBalance;
+	let walletBalance;
 
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
