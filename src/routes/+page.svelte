@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { TonConnectUI } from "@tonconnect/ui";
 
+	import PUBLIC_CREDIT_ADDRESS from "$env/static/public";
 	/**
 	 * @type {TonConnectUI}
 	 */
@@ -54,19 +55,6 @@
 		});
 	});
 
-	// async function fetchWalletBalance(address) {
-	// 	try {
-	// 		const response = await fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${address}`);
-	// 		const data = await response.json();
-
-	// 		const balanceNano = data.result;
-	// 		walletBalance = (parseInt(balanceNano, 10) / 1e9).toFixed(2) + " TON";
-
-	// 	} catch (error) {
-	// 		console.error("Error fetching wallet balance:", error);
-	// 		walletBalance = "Error fetching balance";
-	// 	}
-	// }
 	async function pay() {
 		// await fetchGasFee(); // Fetch the gas fee when the wallet is connected
 		const transaction = {
@@ -74,7 +62,7 @@
 				{
 					address:
 						// "UQDZV_FzmyQtqssRU8EqnvAvcBOeYaH9gdEqdojdQWe9uPIE", // destination address
-						"0:cffd1b65b4206481aa807dea621642ee6bbd3ff2f18deef19b696d0c0624b37f",
+						PUBLIC_CREDIT_ADDRESS,
 					amount: (0.001 * 1e9).toString(), //Toncoin in nanotons
 				},
 			],
@@ -84,41 +72,12 @@
 
 		console.log("transaction result : ", result);
 	}
-
-	// async function fetchGasFee() {
-	// 	try {
-	//         const response = await fetch('https://toncenter.com/api/v2/estimateFee', {
-	//         method: 'POST',
-	//         headers: {
-	//             'accept': 'application/json',
-	//             'Content-Type': 'application/json'
-	//         },
-	//         body: JSON.stringify({
-	//             address: currentConnectWalletAddress,
-	//             body: 'te6ccgEBAQEAAgAAAA==', // Example minimal body encoded in base64
-	//             init_code: '', // If there's initial code, provide it
-	//             init_data: '', // If there's initial data, provide it
-	//             ignore_chksig: true // Assuming you want to ignore the signature check
-	//         })
-	//     });
-
-	//     const data = await response.json();
-	//     console.log('gas data result ,',data);
-	//     // Assuming the fee is returned in nanotons
-	//     const feeNano = data.result?.fee || 0;
-	//     gasFee = (parseInt(feeNano, 10) / 1e9).toFixed(2) + " TON";
-
-	// 	} catch (error) {
-	// 		console.error("Error fetching gas fee:", error);
-	// 		gasFee = "Error fetching gas fee";
-	// 	}
-	// }
 </script>
 
 <main class="bg-black text-white vh-100">
 	<!-- Header with Connect Wallet button -->
 
-	<div class="d-flex justify-content-end py-2 " id="header">
+	<div class="d-flex justify-content-end py-2" id="header">
 		<button id="ton-connect" class="border-white bg-primary rounded py-1"
 		></button>
 	</div>
@@ -136,10 +95,9 @@
 			class="mx-5 my-5 rounded-5 fs-6 fw-bold bg-primary text-white py-2 px-5 w-auto border-white"
 			on:click={pay}>Pay</button
 		>
-        
 	</div>
-  
-    <footer class="text-center">
-        <h4>Powered By Tano</h4>
-    </footer>
+
+	<footer class="text-center">
+		<h4>Powered By Tano</h4>
+	</footer>
 </main>
