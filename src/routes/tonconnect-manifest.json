@@ -1,7 +1,10 @@
 {
-    "url": "https://tano-wallet.vercel.app",                       
-    "name": "tano_bot",                  
-    "iconUrl": "https://ibb.co/DzCJQrZ",               
-    "termsOfUseUrl": "",     
-    "privacyPolicyUrl": ""
+	"name": "Tano bot wallet",
+	"version": "1.0.0",
+	"description": "A brief description of your wallet",
+	"author": "Your Name or Organization",
+	"license": "MIT",
+	"homepage": "https://tano-wallet.vercel.app",
+	"icon": "https://ibb.co/DzCJQrZ",
+	"ton_wallet_version": "2.1.0"
 }

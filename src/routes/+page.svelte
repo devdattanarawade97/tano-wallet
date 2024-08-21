@@ -48,7 +48,7 @@
 
     <!-- Main content -->
     <h1 class="text-center my-5">Welcome to Tano Wallet</h1>
-    <h3 class="text-center">Wallet balance: 0.00$</h3>
+    <h3 class="text-center">Wallet balance: 0.00$</h3>   
 
     <!-- Action buttons -->
     <div class="d-flex justify-content-center align-items-center" id="button-header">
