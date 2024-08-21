@@ -2,7 +2,9 @@
 	import { onMount } from "svelte";
 	import { TonConnectUI } from "@tonconnect/ui";
 
-	import PUBLIC_CREDIT_ADDRESS from "$env/static/public";
+	import {PUBLIC_CREDIT_ADDRESS}  from "$env/static/public";
+
+
 	/**
 	 * @type {TonConnectUI}
 	 */
@@ -42,6 +44,7 @@
 		// Check if the wallet is connected and get the address
 		// Check if the wallet is connected and get the address
 		tonConnectUI.onStatusChange(async (status) => {
+			// @ts-ignore
 			currentConnectWalletAddress = tonConnectUI.account.address;
 
 			// currentConnectWalletAddress="0QCnMdJCBITKDvkwhciaCi9dts3FFIPe3oJ7JPLhhdewGazE"
@@ -68,6 +71,7 @@
 			],
 		};
 
+		// @ts-ignore
 		const result = await tonConnectUI.sendTransaction(transaction);
 
 		console.log("transaction result : ", result);
