@@ -59,6 +59,7 @@
 							"linux",
 						],
 					},
+					
 					{
 						appName: "tonhub",
 						name: "Tonhub",
