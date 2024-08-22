@@ -24,28 +24,30 @@
 			buttonRootId: "ton-connect",
 			walletsListConfiguration: {
 				includeWallets: [
-					{
-						appName: "tonwallet",
-						name: "TON Wallet",
-						imageUrl: "https://wallet.ton.org/assets/ui/qr-logo.png",
-						aboutUrl:
-							"https://chrome.google.com/webstore/detail/ton-wallet/nphplpgoakhhjchkkhmiggakijnkhfnd",
-						universalLink: "https://wallet.ton.org/ton-connect",
-						jsBridgeKey: "tonwallet",
-						// bridgeUrl: "https://bridge.tonapi.io/bridge",
-						bridgeUrl: "https://testnet.tonapi.io/bridge",
-						platforms: ["chrome", "android"],
-					},
+					// {
+					// 	appName: "tonwallet",
+					// 	name: "TON Wallet",
+					// 	imageUrl: "https://wallet.ton.org/assets/ui/qr-logo.png",
+					// 	aboutUrl:
+					// 		"https://chrome.google.com/webstore/detail/ton-wallet/nphplpgoakhhjchkkhmiggakijnkhfnd",
+					// 	universalLink: "https://wallet.ton.org/ton-connect",
+					// 	jsBridgeKey: "tonwallet",
+					// 	// bridgeUrl: "https://bridge.tonapi.io/bridge",
+					// 	bridgeUrl: "https://testnet.tonapi.io/bridge",
+					// 	platforms: ["chrome", "android"],
+					// },
 					{
 						appName: "tonkeeper",
-						name: "tonkeeper",
+						name: "Tonkeeper",
+						tondns:  "tonkeeper.ton",
 						imageUrl:
-							"https://github.com/tonkeeper/wallet",
-						aboutUrl: "https://tonkeeper.com/",
-						universalLink: "https://tonkeeper.io",
+							"https://tonkeeper.com/assets/tonconnect-icon.png",
+						aboutUrl: "https://tonkeeper.com",
+						universalLink: "https://app.tonkeeper.com/ton-connect",
 						// bridgeUrl: "https://bridge.dewallet.pro/bridge",
 						bridgeUrl: "https://testnet.tonapi.io/bridge",
-						platforms: ["ios", "android", "macos", "windows", "linux"],
+						
+						platforms: ["ios", "android", "chrome", "firefox", "safari", "windows", "macos", "linux"],
 					},
 				],
 			},
