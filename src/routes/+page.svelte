@@ -32,8 +32,8 @@
 							"https://chrome.google.com/webstore/detail/ton-wallet/nphplpgoakhhjchkkhmiggakijnkhfnd",
 						universalLink: "https://wallet.ton.org/ton-connect",
 						jsBridgeKey: "tonwallet",
-						// bridgeUrl: "https://bridge.tonapi.io/bridge",
-						bridgeUrl: "https://testnet.tonapi.io/bridge",
+						 bridgeUrl: "https://bridge.tonapi.io/bridge",
+						// bridgeUrl: "https://testnet.tonapi.io/bridge",
 						platforms: ["chrome", "android"],
 					},
 					{
@@ -44,8 +44,8 @@
 						imageUrl: "https://tonkeeper.com/assets/tonconnect-icon.png",
 						aboutUrl: "https://tonkeeper.com",
 						universalLink: "https://app.tonkeeper.com/ton-connect",
-						// bridgeUrl: "https://bridge.tonapi.io/bridge",
-						 bridgeUrl: "https://testnet.tonapi.io/bridge",
+						 bridgeUrl: "https://bridge.tonapi.io/bridge",
+						//  bridgeUrl: "https://testnet.tonapi.io/bridge",
 
 						platforms: [
 							"ios",
