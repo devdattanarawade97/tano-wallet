@@ -36,6 +36,17 @@
 						bridgeUrl: "https://testnet.tonapi.io/bridge",
 						platforms: ["chrome", "android"],
 					},
+					{
+						appName: "tonkeeper",
+						name: "tonkeeper",
+						imageUrl:
+							"https://github.com/tonkeeper/wallet",
+						aboutUrl: "https://tonkeeper.com/",
+						universalLink: "https://tonkeeper.io",
+						// bridgeUrl: "https://bridge.dewallet.pro/bridge",
+						bridgeUrl: "https://testnet.tonapi.io/bridge",
+						platforms: ["ios", "android", "macos", "windows", "linux"],
+					},
 				],
 			},
 		});
@@ -89,36 +100,34 @@
 
 			// console.log("tx status ", transactionHash);
 			// if (txstatus == "finalized"||txstatus=="still pending") {
-				// const { transactionId, userId, status , msgText ,model} = req.body;
-				const fetchModelResponse = await fetch(
-					"http://localhost:3000/notify-transaction",
-					{
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							transactionId: "transactionHash",
-							userId: chatId,
-							status: "status",
-							msgText: msgText,
-							model: model,
-						}),
-					}
-				);
-				const response = fetchModelResponse.json();
-				console.log("response from notify-transaction : ", response);
-			} else {
-				console.error("Failed to retrieve transaction hash.");
-			}
+			// const { transactionId, userId, status , msgText ,model} = req.body;
+			const fetchModelResponse = await fetch(
+				"http://localhost:3000/notify-transaction",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						transactionId: "transactionHash",
+						userId: chatId,
+						status: "status",
+						msgText: msgText,
+						model: model,
+					}),
+				}
+			);
+			const response = fetchModelResponse.json();
+			console.log("response from notify-transaction : ", response);
+		} else {
+			console.error("Failed to retrieve transaction hash.");
+		}
 		// } else {
 		// 	console.error("Failed to get BOC.");
 		// }
 	}
 
 	async function confirmTransaction(boc) {
-
-
 		const fullTransaction = await fetch(
 			"http://localhost:3000/confirm-transaction",
 			{
