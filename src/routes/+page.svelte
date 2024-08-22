@@ -155,7 +155,7 @@
 	</div>
 
 	<!-- Main content -->
-	<h1 class="text-center my-5 display-4 text-glow">Welcome to Tano Wallet</h1>
+	<h1 class="text-center my-2 display-4 text-glow">Welcome to Tano Wallet</h1>
 
 	<!-- Action buttons -->
 	<div
