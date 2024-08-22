@@ -147,7 +147,7 @@
 </script>
 
 <main
-	class=" vh-100 d-flex flex-column justify-content-between align-items-center text-white"
+	class="  d-flex flex-column justify-content-between align-items-center text-white"
 >
 	<!-- Header with Connect Wallet button -->
 	<div class="d-flex justify-content-end py-3 w-100 px-4" id="header">
@@ -168,7 +168,7 @@
 	</div>
 
 	<!-- Footer -->
-	<footer class="text-center w-100 py-3 bg-footer-gradient">
+	<footer class="text-center w-100 py-5 bg-footer-gradient">
 		<h4 class="text-shadow">Powered By Tano</h4>
 	</footer>
 </main>
