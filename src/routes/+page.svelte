@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { TonConnectUI } from "@tonconnect/ui";
+	import { TonConnectUI, TonConnectUIError } from "@tonconnect/ui";
 
 	import { PUBLIC_CREDIT_ADDRESS } from "$env/static/public";
 
@@ -65,12 +65,11 @@
 						imageUrl: "https://tonhub.com/tonconnect_logo.png",
 						aboutUrl: "https://tonhub.com",
 						universalLink: "https://tonhub.com/ton-connect",
-						jsBridgeKey:"tonhub",
-						 bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
-						
+						jsBridgeKey: "tonhub",
+						bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
+
 						platforms: ["ios", "android"],
 					},
-
 				],
 			},
 		});
@@ -100,61 +99,66 @@
 	async function pay() {
 		try {
 			// await fetchGasFee(); // Fetch the gas fee when the wallet is connected
-		const transaction = {
-			messages: [
-				{
-					address:
-						// "UQDZV_FzmyQtqssRU8EqnvAvcBOeYaH9gdEqdojdQWe9uPIE", // destination address
-						PUBLIC_CREDIT_ADDRESS,
-					amount: (0.000000001 * 1e9).toString(), //Toncoin in nanotons
-				},
-			],
-		};
-
-		// @ts-ignore
-		const result = await tonConnectUI.sendTransaction(transaction);
-
-		console.log("transaction result : ", result);
-
-		if (result && result.boc) {
-			// Use BOC to track or decode further
-			console.log("Transaction BOC:", result.boc);
-
-			// Example of how you might send BOC to a tracker
-			// const { txstatus, transactionHash } = await confirmTransaction(result.boc);
-
-			// console.log("tx status ", transactionHash);
-			// if (txstatus == "finalized"||txstatus=="still pending") {
-			// const { transactionId, userId, status , msgText ,model} = req.body;
-			const fetchModelResponse = await fetch(
-				"http://localhost:3000/notify-transaction",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
+			const transaction = {
+				messages: [
+					{
+						address:
+							// "UQDZV_FzmyQtqssRU8EqnvAvcBOeYaH9gdEqdojdQWe9uPIE", // destination address
+							PUBLIC_CREDIT_ADDRESS,
+						amount: (0.000000001 * 1e9).toString(), //Toncoin in nanotons
 					},
-					body: JSON.stringify({
-						transactionId: "transactionHash",
-						userId: chatId,
-						status: "status",
-						msgText: msgText,
-						model: model,
-					}),
-				}
-			);
-			const response = fetchModelResponse.json();
-			console.log("response from notify-transaction : ", response);
-		} else {
-			console.error("Failed to retrieve transaction hash.");
-		}
-		// } else {
-		// 	console.error("Failed to get BOC.");
-		// }
+				],
+			};
+
+			// @ts-ignore
+			const result = await tonConnectUI.sendTransaction(transaction);
+
+			console.log("transaction result : ", result);
+
+			if (result && result.boc) {
+				// Use BOC to track or decode further
+				console.log("Transaction BOC:", result.boc);
+
+				// Example of how you might send BOC to a tracker
+				// const { txstatus, transactionHash } = await confirmTransaction(result.boc);
+
+				// console.log("tx status ", transactionHash);
+				// if (txstatus == "finalized"||txstatus=="still pending") {
+				// const { transactionId, userId, status , msgText ,model} = req.body;
+				const fetchModelResponse = await fetch(
+					"http://localhost:3000/notify-transaction",
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							transactionId: "transactionHash",
+							userId: chatId,
+							status: "status",
+							msgText: msgText,
+							model: model,
+						}),
+					}
+				);
+				const response = fetchModelResponse.json();
+				console.log("response from notify-transaction : ", response);
+			} else {
+				console.error("Failed to retrieve transaction hash.");
+			}
+			// } else {
+			// 	console.error("Failed to get BOC.");
+			// }
 		} catch (error) {
-			
-			console.log("error while paying tx : ", error)
-			
-			alert(error.message)
+			console.log("error while paying tx: ", error);
+
+			if (error instanceof TonConnectUIError) {
+				console.log("TonConnectUIError: ", error.message);
+			} else {
+				console.log("General error: ", error.message);
+			}
+
+			alert(error.message || "An unknown error occurred.");
 		}
 	}
 
