@@ -45,8 +45,8 @@
 						imageUrl: "https://tonkeeper.com/assets/tonconnect-icon.png",
 						aboutUrl: "https://tonkeeper.com",
 						universalLink: "https://app.tonkeeper.com/ton-connect",
-						//  bridgeUrl: "https://bridge.tonapi.io/bridge",
-						bridgeUrl: "https://testnet.tonapi.io/bridge",
+						  bridgeUrl: "https://bridge.tonapi.io/bridge",
+						// bridgeUrl: "https://testnet.tonapi.io/bridge",
 
 						platforms: [
 							"ios",
