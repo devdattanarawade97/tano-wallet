@@ -70,7 +70,7 @@
 						
 						platforms: ["ios", "android"],
 					},
-					
+
 				],
 			},
 		});
@@ -98,7 +98,8 @@
 	});
 
 	async function pay() {
-		// await fetchGasFee(); // Fetch the gas fee when the wallet is connected
+		try {
+			// await fetchGasFee(); // Fetch the gas fee when the wallet is connected
 		const transaction = {
 			messages: [
 				{
@@ -149,6 +150,12 @@
 		// } else {
 		// 	console.error("Failed to get BOC.");
 		// }
+		} catch (error) {
+			
+			console.log("error while paying tx : ", error)
+			
+			alert(error.message)
+		}
 	}
 
 	async function confirmTransaction(boc) {
