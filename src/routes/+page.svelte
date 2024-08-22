@@ -65,6 +65,7 @@
 						imageUrl: "https://tonhub.com/tonconnect_logo.png",
 						aboutUrl: "https://tonhub.com",
 						universalLink: "https://tonhub.com/ton-connect",
+						jsBridgeKey:"tonhub",
 						// bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
 						bridgeUrl: "https://testnet.tonhubapi.com/tonconnect",
 						platforms: ["ios", "android"],
