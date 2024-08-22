@@ -59,7 +59,7 @@
 							"linux",
 						],
 					},
-					
+
 					{
 						appName: "tonhub",
 						name: "Tonhub",
@@ -153,13 +153,7 @@
 		} catch (error) {
 			console.log("error while paying tx: ", error);
 
-			if (error instanceof TonConnectUIError) {
-				console.log("TonConnectUIError: ", error.message);
-			} else {
-				console.log("General error: ", error.message);
-			}
-
-			alert(error.message || "An unknown error occurred.");
+		
 		}
 	}
 
