@@ -12,8 +12,8 @@
 	let chatId;
 	let msgText;
 	let model;
-	let imageUri="";
-	let imageMimeType="";
+	let imageUri = "";
+	let imageMimeType = "";
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
@@ -49,8 +49,7 @@
 						imageUrl: "https://tonkeeper.com/assets/tonconnect-icon.png",
 						aboutUrl: "https://tonkeeper.com",
 						universalLink: "https://app.tonkeeper.com/ton-connect",
-						   bridgeUrl: "https://bridge.tonapi.io/bridge",
-		
+						bridgeUrl: "https://bridge.tonapi.io/bridge",
 
 						platforms: [
 							"ios",
@@ -77,8 +76,8 @@
 				],
 			},
 		});
-		// 
-		
+		//
+
 		tonConnectUI.uiOptions = {
 			// @ts-ignore
 			twaReturnUrl: "https://t.me/tele_block_ai_bot",
@@ -104,18 +103,41 @@
 	async function pay() {
 		try {
 			// await fetchGasFee(); // Fetch the gas fee when the wallet is connected
+			// const transaction = {
+			// 	messages: [
+			// 		{
+
+			// 			address:
+			// 				// "UQDZV_FzmyQtqssRU8EqnvAvcBOeYaH9gdEqdojdQWe9uPIE", // destination address
+			// 				PUBLIC_CREDIT_ADDRESS,
+			// 			amount: (0.000000001 * 1e9).toString(), //Toncoin in nanotons
+			// 			payload: '',
+			// 		},
+			// 	],
+			// };
+
+			//-------------------------- added payload ---------------------------------
+			// Define the transaction object
 			const transaction = {
 				messages: [
 					{
-						
-						address:
-							// "UQDZV_FzmyQtqssRU8EqnvAvcBOeYaH9gdEqdojdQWe9uPIE", // destination address
-							PUBLIC_CREDIT_ADDRESS,
-						amount: (0.000000001 * 1e9).toString(), //Toncoin in nanotons
-						payload: '',
+						address: PUBLIC_CREDIT_ADDRESS, // Destination address
+						amount: (0.000000001 * 1e9).toString(), // Amount in nanotons
+						payload: "", // Optional payload, leave empty if not needed
+						stateInit: undefined, // Optional field for contract state initialization
 					},
 				],
+				validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
 			};
+
+			// Optionally, you may want to check if the wallet is connected before proceeding
+			if (!tonConnectUI.connected) {
+				throw new Error(
+					"Wallet is not connected. Please connect your wallet first."
+				);
+			}
+
+			//-------------------------------added payload ----------------------------------
 
 			// @ts-ignore
 			const result = await tonConnectUI.sendTransaction(transaction);
@@ -132,47 +154,44 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-				if (imageUri!==""){
-                   
-					console.log("image uri : ",imageUri);
+				if (imageUri !== "") {
+					console.log("image uri : ", imageUri);
 					const fetchModelResponse = await fetch(
-					"http://localhost:3000/parse-image",
-					{
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							userId: chatId,
-							imageUri,
-						    imageMimeType,
-						}),
-					}
-				);
-				const response =fetchModelResponse.json();
-				console.log("response from parse image: ", response);
-				}else{
-
+						"http://localhost:3000/parse-image",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								userId: chatId,
+								imageUri,
+								imageMimeType,
+							}),
+						}
+					);
+					const response = fetchModelResponse.json();
+					console.log("response from parse image: ", response);
+				} else {
 					const fetchModelResponse = await fetch(
-					"http://localhost:3000/notify-transaction",
-					{
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							transactionId: "transactionHash",
-							userId: chatId,
-							status: "status",
-							msgText: msgText,
-							model: model,
-						}),
-					}
-				);
-				const response = fetchModelResponse.json();
-				console.log("response from notify-transaction : ", response);
+						"http://localhost:3000/notify-transaction",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								transactionId: "transactionHash",
+								userId: chatId,
+								status: "status",
+								msgText: msgText,
+								model: model,
+							}),
+						}
+					);
+					const response = fetchModelResponse.json();
+					console.log("response from notify-transaction : ", response);
 				}
-			
 			} else {
 				console.error("Failed to retrieve transaction hash.");
 			}
@@ -181,8 +200,6 @@
 			// }
 		} catch (error) {
 			console.log("error while paying tx: ", error);
-
-		
 		}
 	}
 
@@ -212,13 +229,7 @@
 			transactionHash: fullTransaction,
 		};
 	}
-
-	
-
-
-
 </script>
-
 
 <main
 	class="  d-flex flex-column justify-content-between align-items-center text-white"
