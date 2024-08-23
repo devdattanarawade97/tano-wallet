@@ -45,7 +45,7 @@
 						imageUrl: "https://tonkeeper.com/assets/tonconnect-icon.png",
 						aboutUrl: "https://tonkeeper.com",
 						universalLink: "https://app.tonkeeper.com/ton-connect",
-						  bridgeUrl: "https://bridge.tonapi.io/bridge",
+						//   bridgeUrl: "https://bridge.tonapi.io/bridge",
 						// bridgeUrl: "https://testnet.tonapi.io/bridge",
 
 						platforms: [
@@ -67,14 +67,14 @@
 						aboutUrl: "https://tonhub.com",
 						universalLink: "https://tonhub.com/ton-connect",
 						jsBridgeKey: "tonhub",
-						bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
-
 						platforms: ["ios", "android"],
+						// bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
 					},
 				],
 			},
 		});
-
+		// 
+		
 		tonConnectUI.uiOptions = {
 			// @ts-ignore
 			twaReturnUrl: "https://t.me/tele_block_ai_bot",
@@ -183,7 +183,13 @@
 			transactionHash: fullTransaction,
 		};
 	}
+
+	
+
+
+
 </script>
+
 
 <main
 	class="  d-flex flex-column justify-content-between align-items-center text-white"
