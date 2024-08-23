@@ -12,7 +12,7 @@
 	let chatId;
 	let msgText;
 	let model;
-	let imageUri = "";
+	let imageUri = null;
 	let imageMimeType = "";
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
@@ -22,6 +22,7 @@
 		msgText = urlParams.get("msg_text");
 		model = urlParams.get("model");
 		imageUri = urlParams.get("imageUri");
+		console.log("image uri ",imageUri);
 		imageMimeType = urlParams.get("imageMimeType");
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
@@ -154,7 +155,7 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-				if (imageUri !== ""||null) {
+				if (imageUri !== null) {
 					console.log("image uri : ", imageUri);
 					const fetchModelResponse = await fetch(
 						"http://localhost:3000/parse-image",
