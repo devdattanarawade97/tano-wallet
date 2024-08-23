@@ -81,7 +81,8 @@
 
 		tonConnectUI.uiOptions = {
 			// @ts-ignore
-			twaReturnUrl: "https://t.me/tele_block_ai_bot",
+			// twaReturnUrl: "https://t.me/tele_block_ai_bot",
+			twaReturnUrl: "https://tano-wallet.vercel.app/",
 		};
 
 		// Check if the wallet is connected and get the address
@@ -171,7 +172,7 @@
 							}),
 						}
 					);
-					const response = fetchModelResponse.json();
+					const response = await  fetchModelResponse.json(); // await might cause error 
 					console.log("response from parse image: ", response);
 				} else {
 					const fetchModelResponse = await fetch(
@@ -190,7 +191,7 @@
 							}),
 						}
 					);
-					const response = fetchModelResponse.json();
+					const response = await fetchModelResponse.json(); // error might occur for await 
 					console.log("response from notify-transaction : ", response);
 				}
 			} else {
