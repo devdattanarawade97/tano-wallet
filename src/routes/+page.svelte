@@ -107,10 +107,12 @@
 			const transaction = {
 				messages: [
 					{
+						
 						address:
 							// "UQDZV_FzmyQtqssRU8EqnvAvcBOeYaH9gdEqdojdQWe9uPIE", // destination address
 							PUBLIC_CREDIT_ADDRESS,
 						amount: (0.000000001 * 1e9).toString(), //Toncoin in nanotons
+						payload: '',
 					},
 				],
 			};
