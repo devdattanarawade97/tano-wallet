@@ -81,8 +81,8 @@
 
 		tonConnectUI.uiOptions = {
 			// @ts-ignore
-			// twaReturnUrl: "https://t.me/tele_block_ai_bot",
-			twaReturnUrl: "https://tano-wallet.vercel.app/",
+			 twaReturnUrl: "https://t.me/tele_block_ai_bot",
+			// twaReturnUrl: "https://tano-wallet.vercel.app/",
 		};
 
 		// Check if the wallet is connected and get the address
