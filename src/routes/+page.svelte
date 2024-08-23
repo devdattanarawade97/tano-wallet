@@ -12,6 +12,8 @@
 	let chatId;
 	let msgText;
 	let model;
+	let imageUri;
+	let imageMimeType;
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
@@ -19,6 +21,8 @@
 		chatId = urlParams.get("chat_id");
 		msgText = urlParams.get("msg_text");
 		model = urlParams.get("model");
+		imageUri = urlParams.get("imageUri");
+		imageMimeType = urlParams.get("imageMimeType");
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -126,7 +130,27 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-				const fetchModelResponse = await fetch(
+				if (imageUri!==undefined){
+
+					const fetchModelResponse = await fetch(
+					"http://localhost:3000/parse-image",
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							userId: chatId,
+							imageUri,
+						    imageMimeType,
+						}),
+					}
+				);
+				const response = fetchModelResponse.json();
+				console.log("response from notify-transaction : ", response);
+				}else{
+
+					const fetchModelResponse = await fetch(
 					"http://localhost:3000/notify-transaction",
 					{
 						method: "POST",
@@ -144,6 +168,8 @@
 				);
 				const response = fetchModelResponse.json();
 				console.log("response from notify-transaction : ", response);
+				}
+			
 			} else {
 				console.error("Failed to retrieve transaction hash.");
 			}
