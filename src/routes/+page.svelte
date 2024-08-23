@@ -154,7 +154,7 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-				if (imageUri !== "") {
+				if (imageUri !== ""||null) {
 					console.log("image uri : ", imageUri);
 					const fetchModelResponse = await fetch(
 						"http://localhost:3000/parse-image",
