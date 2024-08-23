@@ -46,7 +46,7 @@
 						aboutUrl: "https://tonkeeper.com",
 						universalLink: "https://app.tonkeeper.com/ton-connect",
 						//   bridgeUrl: "https://bridge.tonapi.io/bridge",
-						// bridgeUrl: "https://testnet.tonapi.io/bridge",
+						 bridgeUrl: "https://testnet.tonapi.io/bridge",
 
 						platforms: [
 							"ios",
@@ -68,7 +68,7 @@
 						universalLink: "https://tonhub.com/ton-connect",
 						jsBridgeKey: "tonhub",
 						platforms: ["ios", "android"],
-						// bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
+						bridgeUrl: "https://connect.tonhubapi.com/tonconnect",
 					},
 				],
 			},
