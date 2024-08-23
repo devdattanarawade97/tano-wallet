@@ -3,7 +3,7 @@
 	import { TonConnectUI, TonConnectUIError } from "@tonconnect/ui";
 
 	import { PUBLIC_CREDIT_ADDRESS } from "$env/static/public";
-
+	import { PUBLIC_BACKEND_BASE_URI } from "$env/static/public";
 	/**
 	 * @type {TonConnectUI}
 	 */
@@ -78,6 +78,7 @@
 			},
 		});
 		//
+
 
 		tonConnectUI.uiOptions = {
 			// @ts-ignore
@@ -159,7 +160,7 @@
 				if (imageUri !== null) {
 					console.log("image uri : ", imageUri);
 					const fetchModelResponse = await fetch(
-						"http://localhost:3000/parse-image",
+						`${PUBLIC_BACKEND_BASE_URI}/parse-image`,
 						{
 							method: "POST",
 							headers: {
@@ -176,7 +177,7 @@
 					console.log("response from parse image: ", response);
 				} else {
 					const fetchModelResponse = await fetch(
-						"http://localhost:3000/notify-transaction",
+						`${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
 						{
 							method: "POST",
 							headers: {
@@ -207,7 +208,7 @@
 
 	async function confirmTransaction(boc) {
 		const fullTransaction = await fetch(
-			"http://localhost:3000/confirm-transaction",
+			`${PUBLIC_BACKEND_BASE_URI}/confirm-transaction`,
 			{
 				method: "POST",
 				headers: {
