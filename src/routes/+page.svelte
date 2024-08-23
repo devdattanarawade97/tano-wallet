@@ -131,7 +131,8 @@
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
 				if (imageUri!==""){
-
+                   
+					console.log("image uri : ",imageUri);
 					const fetchModelResponse = await fetch(
 					"http://localhost:3000/parse-image",
 					{
@@ -146,8 +147,8 @@
 						}),
 					}
 				);
-				const response = fetchModelResponse.json();
-				console.log("response from notify-transaction : ", response);
+				const response =fetchModelResponse.json();
+				console.log("response from parse image: ", response);
 				}else{
 
 					const fetchModelResponse = await fetch(
