@@ -14,6 +14,8 @@
 	let model;
 	let imageUri = null;
 	let imageMimeType = "";
+	let charge=null;
+	let telegramUsername=null;
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
@@ -22,8 +24,12 @@
 		msgText = urlParams.get("msg_text");
 		model = urlParams.get("model");
 		imageUri = urlParams.get("imageUri");
-		console.log("image uri ",imageUri);
+		console.log("image uri ", imageUri);
 		imageMimeType = urlParams.get("imageMimeType");
+		charge=urlParams.get("charge");
+		telegramUsername=urlParams.get("telegramUsername");
+        console.log("charge : ", charge);
+		console.log("telegramUsername : ", telegramUsername);
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -79,10 +85,9 @@
 		});
 		//
 
-
 		tonConnectUI.uiOptions = {
 			// @ts-ignore
-			 twaReturnUrl: "https://t.me/tele_block_ai_bot",
+			twaReturnUrl: "https://t.me/tele_block_ai_bot",
 			// twaReturnUrl: "https://tano-wallet.vercel.app/",
 		};
 
@@ -121,17 +126,33 @@
 
 			//-------------------------- added payload ---------------------------------
 			// Define the transaction object
-			const transaction = {
+			let transaction
+			if(charge!==null){
+				transaction = {
 				messages: [
 					{
 						address: PUBLIC_CREDIT_ADDRESS, // Destination address
-						amount: (0.000000001 * 1e9).toString(), // Amount in nanotons
+						amount: (2*0.0001 * 1e9*charge*).toString(), // Amount in nanotons
 						payload: "", // Optional payload, leave empty if not needed
 						stateInit: undefined, // Optional field for contract state initialization
 					},
 				],
 				validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
 			};
+			}else{
+				transaction = {
+				messages: [
+					{
+						address: PUBLIC_CREDIT_ADDRESS, // Destination address
+						amount: (0.0001 * 1e9).toString(), // Amount in nanotons
+						payload: "", // Optional payload, leave empty if not needed
+						stateInit: undefined, // Optional field for contract state initialization
+					},
+				],
+				validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
+			};
+			}
+			 
 
 			// Optionally, you may want to check if the wallet is connected before proceeding
 			if (!tonConnectUI.connected) {
@@ -173,8 +194,25 @@
 							}),
 						}
 					);
-					const response = await  fetchModelResponse.json(); // await might cause error 
+					const response = await fetchModelResponse.json(); // await might cause error
 					console.log("response from parse image: ", response);
+				}else if (charge!==null){
+					
+					const chargeResponse = await fetch(
+						`${PUBLIC_BACKEND_BASE_URI}/update-lastused`,
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								telegramUserName:telegramUsername,
+							}),
+						}
+					);
+					const response = await chargeResponse.json(); // error might occur for await
+					console.log("response from update-lastused : ", response);
+				
 				} else {
 					const fetchModelResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
@@ -192,7 +230,7 @@
 							}),
 						}
 					);
-					const response = await fetchModelResponse.json(); // error might occur for await 
+					const response = await fetchModelResponse.json(); // error might occur for await
 					console.log("response from notify-transaction : ", response);
 				}
 			} else {
