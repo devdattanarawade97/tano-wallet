@@ -30,7 +30,7 @@
 		console.log("image uri ", imageUri);
 		imageMimeType = urlParams.get("imageMimeType");
 		charge=urlParams.get("charge");
-		telegramUsername=urlParams.get("telegramUsername");
+		telegramUsername=urlParams.get("username");
         console.log("charge : ", charge);
 		console.log("telegramUsername : ", telegramUsername);
 		tonConnectUI = new TonConnectUI({
