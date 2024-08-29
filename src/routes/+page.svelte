@@ -131,11 +131,13 @@
 			// Define the transaction object
 			let transaction
 			if(charge!==null){
+
+				let amount =(2*0.0001 * 1e9*Number(charge)).toString();
 				transaction = {
 				messages: [
 					{
 						address: PUBLIC_CREDIT_ADDRESS, // Destination address
-						amount: (2*0.0001 * 1e9*Number(charge)).toString(), // Amount in nanotons
+						amount: amount , // Amount in nanotons
 						payload: "", // Optional payload, leave empty if not needed
 						stateInit: undefined, // Optional field for contract state initialization
 					},
