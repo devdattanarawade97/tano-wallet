@@ -14,6 +14,9 @@
 	let model;
 	let imageUri = null;
 	let imageMimeType = "";
+	/**
+	 * @type {string | number | null}
+	 */
 	let charge=null;
 	let telegramUsername=null;
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
@@ -132,7 +135,7 @@
 				messages: [
 					{
 						address: PUBLIC_CREDIT_ADDRESS, // Destination address
-						amount: (2*0.0001 * 1e9*charge*).toString(), // Amount in nanotons
+						amount: (2*0.0001 * 1e9*Number(charge)).toString(), // Amount in nanotons
 						payload: "", // Optional payload, leave empty if not needed
 						stateInit: undefined, // Optional field for contract state initialization
 					},
