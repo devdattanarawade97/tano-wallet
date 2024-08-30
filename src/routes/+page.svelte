@@ -31,7 +31,7 @@
 		imageMimeType = urlParams.get("imageMimeType");
 		charge=urlParams.get("charge");
 		telegramUsername=urlParams.get("username");
-        console.log("charge : ", charge);
+        console.log("charge : ", typeof(charge));
 		console.log("telegramUsername : ", telegramUsername);
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
@@ -130,6 +130,7 @@
 			//-------------------------- added payload ---------------------------------
 			// Define the transaction object
 			let transaction
+			console.log("charge : ",charge);
 			if(charge!==null){
 
 				let amount =(2*0.0001 * 1e9*Number(charge)).toString();
@@ -212,6 +213,7 @@
 							},
 							body: JSON.stringify({
 								telegramUserName:telegramUsername,
+								chatId:chatId,
 							}),
 						}
 					);
