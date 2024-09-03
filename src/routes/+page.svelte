@@ -4,6 +4,7 @@
 
 	import { PUBLIC_CREDIT_ADDRESS } from "$env/static/public";
 	import { PUBLIC_BACKEND_BASE_URI } from "$env/static/public";
+	import { goto } from "$app/navigation";
 	/**
 	 * @type {TonConnectUI}
 	 */
@@ -19,6 +20,7 @@
 	 */
 	let charge=null;
 	let telegramUsername=null;
+	console.log("base uri : ",PUBLIC_BACKEND_BASE_URI)
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
@@ -33,6 +35,9 @@
 		telegramUsername=urlParams.get("username");
         console.log("charge : ", typeof(charge));
 		console.log("telegramUsername : ", telegramUsername);
+		console.log("chatid : ", chatId);
+		console.log("model  : ", model);
+		console.log("msg text  : ", msgText);
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -221,8 +226,10 @@
 					console.log("response from update-lastused : ", response);
 				
 				} else {
+				
 					const fetchModelResponse = await fetch(
-						`${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
+						 `${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
+						// `http://localhost:3000/notify-transaction`,
 						{
 							method: "POST",
 							headers: {
@@ -277,6 +284,8 @@
 			transactionHash: fullTransaction,
 		};
 	}
+
+
 </script>
 
 <main
@@ -298,6 +307,11 @@
 		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold" on:click={pay}
 			>Pay</button
 		>
+		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold "
+			><a href="https://bridge.ton.org/" class="swap-button text-decoration-none" >swap</a>
+		
+			</button
+		>
 	</div>
 
 	<!-- Footer -->
@@ -308,6 +322,19 @@
 
 <style>
 	/* Gradient background for the main container */
+
+	.swap-button{
+		background: linear-gradient(45deg, #ff6f61, #ff9a8b);
+		border: none;
+		border-radius: 50px;
+		padding: 0.7rem 1.5rem;
+		color: white;
+		font-weight: bold;
+		cursor: pointer;
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+	}
 	.text-glow {
 		color: #fff;
 		text-shadow:
