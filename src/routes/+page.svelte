@@ -308,7 +308,7 @@
 			>Pay</button
 		>
 		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold "
-			><a href="https://bridge.ton.org/" class="swap-button text-decoration-none" >swap</a>
+			><a href="https://app.symbiosis.finance/swap" class="swap-button text-decoration-none" >swap</a>
 		
 			</button
 		>
