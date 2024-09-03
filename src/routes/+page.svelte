@@ -319,18 +319,6 @@
 <style>
 	/* Gradient background for the main container */
 
-	.swap-button{
-		background: linear-gradient(45deg, #ff6f61, #ff9a8b);
-		border: none;
-		border-radius: 50px;
-		padding: 0.7rem 1.5rem;
-		color: white;
-		font-weight: bold;
-		cursor: pointer;
-		transition:
-			transform 0.3s ease,
-			box-shadow 0.3s ease;
-	}
 	.text-glow {
 		color: #fff;
 		text-shadow:
