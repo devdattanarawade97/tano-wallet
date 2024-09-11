@@ -15,12 +15,13 @@
 	let model;
 	let imageUri = null;
 	let imageMimeType = "";
+	let command = null;
 	/**
 	 * @type {string | number | null}
 	 */
-	let charge=null;
-	let telegramUsername=null;
-	console.log("base uri : ",PUBLIC_BACKEND_BASE_URI)
+	let charge = null;
+	let telegramUsername = null;
+	console.log("base uri : ", PUBLIC_BACKEND_BASE_URI);
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
@@ -31,9 +32,10 @@
 		imageUri = urlParams.get("imageUri");
 		console.log("image uri ", imageUri);
 		imageMimeType = urlParams.get("imageMimeType");
-		charge=urlParams.get("charge");
-		telegramUsername=urlParams.get("username");
-        console.log("charge : ", typeof(charge));
+		charge = urlParams.get("charge");
+		telegramUsername = urlParams.get("username");
+		command=urlParams.get("command");
+		console.log("charge : ", typeof charge);
 		console.log("telegramUsername : ", telegramUsername);
 		console.log("chatid : ", chatId);
 		console.log("model  : ", model);
@@ -134,41 +136,39 @@
 
 			//-------------------------- added payload ---------------------------------
 			// Define the transaction object
-			let transaction
-			console.log("charge : ",charge);
-			if(charge!==null){
-
-				let amount =(2*0.0001 * 1e9*Number(charge)).toString();
+			let transaction;
+			console.log("charge : ", charge);
+			if (charge !== null) {
+				let amount = (2 * 0.0001 * 1e9 * Number(charge)).toString();
 				transaction = {
-				messages: [
-					{
-						address: PUBLIC_CREDIT_ADDRESS, // Destination address
-						amount: amount , // Amount in nanotons
-						payload: "", // Optional payload, leave empty if not needed
-						stateInit: undefined, // Optional field for contract state initialization
-					},
-				],
-				validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
-			};
-			}else{
+					messages: [
+						{
+							address: PUBLIC_CREDIT_ADDRESS, // Destination address
+							amount: amount, // Amount in nanotons
+							payload: "", // Optional payload, leave empty if not needed
+							stateInit: undefined, // Optional field for contract state initialization
+						},
+					],
+					validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
+				};
+			} else {
 				transaction = {
-				messages: [
-					{
-						address: PUBLIC_CREDIT_ADDRESS, // Destination address
-						amount: (0.0001 * 1e9).toString(), // Amount in nanotons
-						payload: "", // Optional payload, leave empty if not needed
-						stateInit: undefined, // Optional field for contract state initialization
-					},
-				],
-				validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
-			};
+					messages: [
+						{
+							address: PUBLIC_CREDIT_ADDRESS, // Destination address
+							amount: (0.0001 * 1e9).toString(), // Amount in nanotons
+							payload: "", // Optional payload, leave empty if not needed
+							stateInit: undefined, // Optional field for contract state initialization
+						},
+					],
+					validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
+				};
 			}
-			 
 
 			// Optionally, you may want to check if the wallet is connected before proceeding
 			if (!tonConnectUI.connected) {
 				throw new Error(
-					"Wallet is not connected. Please connect your wallet first."
+					"Wallet is not connected. Please connect your wallet first.",
 				);
 			}
 
@@ -203,12 +203,11 @@
 								imageUri,
 								imageMimeType,
 							}),
-						}
+						},
 					);
 					const response = await fetchModelResponse.json(); // await might cause error
 					console.log("response from parse image: ", response);
-				}else if (charge!==null){
-					
+				} else if (charge !== null) {
 					const chargeResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/update-lastused`,
 						{
@@ -217,18 +216,33 @@
 								"Content-Type": "application/json",
 							},
 							body: JSON.stringify({
-								telegramUserName:telegramUsername,
-								chatId:chatId,
+								telegramUserName: telegramUsername,
+								chatId: chatId,
 							}),
-						}
+						},
 					);
 					const response = await chargeResponse.json(); // error might occur for await
 					console.log("response from update-lastused : ", response);
-				
-				} else {
-				
+				}else if (command == "create") {
+					const imageResponse = await fetch(
+						`${PUBLIC_BACKEND_BASE_URI}/generate-image`,
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								
+								chatId: chatId,
+								msgText: msgText,
+							}),
+						},
+					);
+					const response = await imageResponse.json(); // error might occur for await
+					console.log("response from generate-image : ", response);
+				}  else {
 					const fetchModelResponse = await fetch(
-						 `${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
+						`${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
 						// `http://localhost:3000/notify-transaction`,
 						{
 							method: "POST",
@@ -242,7 +256,7 @@
 								msgText: msgText,
 								model: model,
 							}),
-						}
+						},
 					);
 					const response = await fetchModelResponse.json(); // error might occur for await
 					console.log("response from notify-transaction : ", response);
@@ -269,7 +283,7 @@
 				body: JSON.stringify({
 					boc: boc,
 				}),
-			}
+			},
 		);
 		const response = await fullTransaction.json();
 		console.log("Transaction status:", response.status);
@@ -284,8 +298,6 @@
 			transactionHash: fullTransaction,
 		};
 	}
-
-
 </script>
 
 <main
@@ -307,7 +319,6 @@
 		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold" on:click={pay}
 			>Pay</button
 		>
-	
 	</div>
 
 	<!-- Footer -->
