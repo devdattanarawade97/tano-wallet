@@ -223,7 +223,7 @@
 					);
 					const response = await chargeResponse.json(); // error might occur for await
 					console.log("response from update-lastused : ", response);
-				}else if (command == "create") {
+				}else if (command == "generate") {
 					const imageResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/generate-image`,
 						{
