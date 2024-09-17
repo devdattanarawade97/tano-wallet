@@ -319,14 +319,11 @@
 		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold" on:click={pay}
 			>Pay</button
 		>
-		<button class="swap-button shadow-lg mx-5 my-5 fs-5 fw-bold"
-		><a href="https://app.symbiosis.finance/swap">Swap</a></button
-	>
 	</div>
 
 	<!-- Footer -->
 	<footer class="text-center w-100 py-5 bg-footer-gradient">
-		<h4 class="text-shadow footer-text">Powered By Tano</h4>
+		<h4 class="text-shadow">Powered By Tano</h4>
 	</footer>
 </main>
 
@@ -334,13 +331,12 @@
 	/* Gradient background for the main container */
 
 	.text-glow {
-		color:black;
-		font-weight: 400;
-	
-	}
-
-	#button-header{
-		margin-top: 20px;
+		color: #fff;
+		text-shadow:
+			0 0 10px #ff6f61,
+			0 0 20px #ff6f61,
+			0 0 30px #ff6f61,
+			0 0 40px #ff6f61;
 	}
 
 	/* Gradient animation */
@@ -356,15 +352,21 @@
 		}
 	}
 
+	/* Glowing text effect */
+	.text-glow {
+		color: #fff;
+		text-shadow:
+			0 0 10px #ff6f61,
+			0 0 20px #ff6f61,
+			0 0 30px #ff6f61,
+			0 0 40px #ff6f61;
+	}
 
-   .footer-text{
-	color:black;
-   }
 	/* Shading effect for the text */
 
 	/* Button styles */
 	.connect-button,
-	.pay-button , .swap-button {
+	.pay-button {
 		background: linear-gradient(45deg, #ff6f61, #ff9a8b);
 		border: none;
 		border-radius: 50px;
@@ -372,25 +374,26 @@
 		color: white;
 		font-weight: bold;
 		cursor: pointer;
-	   
 		transition:
 			transform 0.3s ease,
 			box-shadow 0.3s ease;
 	}
-    a {
-		text-decoration: none;
-		color: white;
-	}
+
 	.connect-button:hover,
-	.pay-button:hover ,.swap-button::hover{
+	.pay-button:hover {
 		transform: translateY(-3px);
 		box-shadow: 0px 5px 20px rgba(255, 105, 135, 0.4);
 	}
 
+	/* Footer gradient */
+	.bg-footer-gradient {
+		background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+	}
 
-	
-
-
+	/* Text shadow for footer text */
+	.text-shadow {
+		text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+	}
 
 	/* For mobile responsiveness */
 	@media (max-width: 768px) {
