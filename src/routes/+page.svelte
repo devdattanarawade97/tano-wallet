@@ -151,19 +151,21 @@
 					],
 					validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
 				};
-			} else {
-				transaction = {
-					messages: [
-						{
-							address: PUBLIC_CREDIT_ADDRESS, // Destination address
-							amount: (0.0001 * 1e9).toString(), // Amount in nanotons
-							payload: "", // Optional payload, leave empty if not needed
-							stateInit: undefined, // Optional field for contract state initialization
-						},
-					],
-					validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
-				};
-			}
+			} 
+			
+			// else {
+			// 	transaction = {
+			// 		messages: [
+			// 			{
+			// 				address: PUBLIC_CREDIT_ADDRESS, // Destination address
+			// 				amount: (0.0001 * 1e9).toString(), // Amount in nanotons
+			// 				payload: "", // Optional payload, leave empty if not needed
+			// 				stateInit: undefined, // Optional field for contract state initialization
+			// 			},
+			// 		],
+			// 		validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
+			// 	};
+			// }
 
 			// Optionally, you may want to check if the wallet is connected before proceeding
 			if (!tonConnectUI.connected) {
