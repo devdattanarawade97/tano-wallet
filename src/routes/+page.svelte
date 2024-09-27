@@ -319,8 +319,8 @@
         <p class="lead">Seamless, decentralized storage and AI-driven insights</p>
         <!-- Pay and Swap Buttons -->
         <div class="d-flex justify-content-center align-items-center mt-4 button-container">
-            <button id="pay" class="btn btn-primary pay-button mx-2">Pay</button>
-            <button id="swap" class="btn btn-secondary swap-button mx-2"><a href="https://app.symbiosis.finance/swap">Swap</a></button>
+            <button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay</button>
+            <button id="swap" class="swap-button btn btn-secondary swap-button mx-2"><a href="https://app.symbiosis.finance/swap">Swap</a></button>
         </div>
     </section>
 </main>
