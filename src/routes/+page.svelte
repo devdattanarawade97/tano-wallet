@@ -26,7 +26,7 @@
 		
 		charge = urlParams.get("charge");
 		telegramUsername = urlParams.get("username");
-
+		
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -178,7 +178,7 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-				 if (charge !== null) {
+			 if (charge !== null) {
 					const chargeResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/update-lastused`,
 						{
@@ -192,8 +192,6 @@
 							}),
 						},
 					);
-
-
 					const response = await chargeResponse.json(); // error might occur for await
 					console.log("response from update-lastused : ", response);
 				}
@@ -235,6 +233,7 @@
 		};
 	}
 </script>
+
 <main class="container-fluid main-content text-white">
     <!-- Header -->
     <header class="d-flex flex-wrap align-items-center py-2 px-3">
