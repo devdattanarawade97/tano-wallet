@@ -223,6 +223,8 @@
 							}),
 						},
 					);
+
+					
 					const response = await chargeResponse.json(); // error might occur for await
 					console.log("response from update-lastused : ", response);
 				}else if (command == "generate") {
