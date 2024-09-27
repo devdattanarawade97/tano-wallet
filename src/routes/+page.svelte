@@ -11,11 +11,7 @@
 	let tonConnectUI;
 	let currentConnectWalletAddress = "";
 	let chatId;
-	let msgText;
-	let model;
-	let imageUri = null;
-	let imageMimeType = "";
-	let command = null;
+
 	/**
 	 * @type {string | number | null}
 	 */
@@ -27,19 +23,10 @@
 		// Initialize TonConnectUI after component is mounted
 		const urlParams = new URLSearchParams(window.location.search);
 		chatId = urlParams.get("chat_id");
-		msgText = urlParams.get("msg_text");
-		model = urlParams.get("model");
-		imageUri = urlParams.get("imageUri");
-		console.log("image uri ", imageUri);
-		imageMimeType = urlParams.get("imageMimeType");
+		
 		charge = urlParams.get("charge");
 		telegramUsername = urlParams.get("username");
-		command=urlParams.get("command");
-		console.log("charge : ", typeof charge);
-		console.log("telegramUsername : ", telegramUsername);
-		console.log("chatid : ", chatId);
-		console.log("model  : ", model);
-		console.log("msg text  : ", msgText);
+
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -191,25 +178,7 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-				if (imageUri !== null) {
-					console.log("image uri : ", imageUri);
-					const fetchModelResponse = await fetch(
-						`${PUBLIC_BACKEND_BASE_URI}/parse-image`,
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({
-								userId: chatId,
-								imageUri,
-								imageMimeType,
-							}),
-						},
-					);
-					const response = await fetchModelResponse.json(); // await might cause error
-					console.log("response from parse image: ", response);
-				} else if (charge !== null) {
+				 if (charge !== null) {
 					const chargeResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/update-lastused`,
 						{
@@ -224,46 +193,9 @@
 						},
 					);
 
-					
+
 					const response = await chargeResponse.json(); // error might occur for await
 					console.log("response from update-lastused : ", response);
-				}else if (command == "generate") {
-					const imageResponse = await fetch(
-						`${PUBLIC_BACKEND_BASE_URI}/generate-image`,
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({
-								
-								chatId: chatId,
-								msgText: msgText,
-							}),
-						},
-					);
-					const response = await imageResponse.json(); // error might occur for await
-					console.log("response from generate-image : ", response);
-				}  else {
-					const fetchModelResponse = await fetch(
-						`${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
-						// `http://localhost:3000/notify-transaction`,
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({
-								transactionId: "transactionHash",
-								userId: chatId,
-								status: "status",
-								msgText: msgText,
-								model: model,
-							}),
-						},
-					);
-					const response = await fetchModelResponse.json(); // error might occur for await
-					console.log("response from notify-transaction : ", response);
 				}
 			} else {
 				console.error("Failed to retrieve transaction hash.");
