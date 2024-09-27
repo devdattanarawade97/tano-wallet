@@ -11,7 +11,11 @@
 	let tonConnectUI;
 	let currentConnectWalletAddress = "";
 	let chatId;
-
+	let msgText;
+	let model;
+	let imageUri = null;
+	let imageMimeType = "";
+	let command = null;
 	/**
 	 * @type {string | number | null}
 	 */
@@ -23,10 +27,19 @@
 		// Initialize TonConnectUI after component is mounted
 		const urlParams = new URLSearchParams(window.location.search);
 		chatId = urlParams.get("chat_id");
-		
+		msgText = urlParams.get("msg_text");
+		model = urlParams.get("model");
+		imageUri = urlParams.get("imageUri");
+		console.log("image uri ", imageUri);
+		imageMimeType = urlParams.get("imageMimeType");
 		charge = urlParams.get("charge");
 		telegramUsername = urlParams.get("username");
-		
+		command=urlParams.get("command");
+		console.log("charge : ", typeof charge);
+		console.log("telegramUsername : ", telegramUsername);
+		console.log("chatid : ", chatId);
+		console.log("model  : ", model);
+		console.log("msg text  : ", msgText);
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -178,7 +191,25 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-			 if (charge !== null) {
+				if (imageUri !== null) {
+					console.log("image uri : ", imageUri);
+					const fetchModelResponse = await fetch(
+						`${PUBLIC_BACKEND_BASE_URI}/parse-image`,
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								userId: chatId,
+								imageUri,
+								imageMimeType,
+							}),
+						},
+					);
+					const response = await fetchModelResponse.json(); // await might cause error
+					console.log("response from parse image: ", response);
+				} else if (charge !== null) {
 					const chargeResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/update-lastused`,
 						{
@@ -194,6 +225,43 @@
 					);
 					const response = await chargeResponse.json(); // error might occur for await
 					console.log("response from update-lastused : ", response);
+				}else if (command == "generate") {
+					const imageResponse = await fetch(
+						`${PUBLIC_BACKEND_BASE_URI}/generate-image`,
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								
+								chatId: chatId,
+								msgText: msgText,
+							}),
+						},
+					);
+					const response = await imageResponse.json(); // error might occur for await
+					console.log("response from generate-image : ", response);
+				}  else {
+					const fetchModelResponse = await fetch(
+						`${PUBLIC_BACKEND_BASE_URI}/notify-transaction`,
+						// `http://localhost:3000/notify-transaction`,
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								transactionId: "transactionHash",
+								userId: chatId,
+								status: "status",
+								msgText: msgText,
+								model: model,
+							}),
+						},
+					);
+					const response = await fetchModelResponse.json(); // error might occur for await
+					console.log("response from notify-transaction : ", response);
 				}
 			} else {
 				console.error("Failed to retrieve transaction hash.");
@@ -234,182 +302,106 @@
 	}
 </script>
 
-<main class="container-fluid main-content text-white">
-    <!-- Header -->
-    <header class="d-flex flex-wrap align-items-center py-2 px-3">
-        <div class="logo">
-            <!-- <img src="logo.png" alt="Logo" height="40"> -->
-            <p class="display-5 logo-text">TANO</p>
-        </div>
-        <div class="d-flex align-items-center header-button-section">
-            <button id="ton-connect" class="btn btn-primary connect-wallet-btn"></button>
-        </div>
-    </header>
+<main
+	class="  d-flex flex-column justify-content-between align-items-center text-white"
+>
+	<!-- Header with Connect Wallet button -->
+	<div class="d-flex justify-content-end py-3 w-100 px-4" id="header">
+		<button id="ton-connect" class="connect-button shadow-lg">connect wallet</button>
+	</div>
 
-    <!-- Main Section -->
-    <section class="text-center hero-section my-5">
-        <h1 class="display-4">Maximizing AI-Powered Solution,<br>Only at TANO.</h1>
-        <p class="lead">Seamless, decentralized storage and AI-driven insights</p>
-        <!-- Pay and Swap Buttons -->
-        <div class="d-flex justify-content-center align-items-center mt-4 button-container">
-            <button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay</button>
-            <button id="swap" class="swap-button btn btn-secondary swap-button mx-2"><a href="https://app.symbiosis.finance/swap">Swap</a></button>
-        </div>
-    </section>
+	<!-- Main content -->
+	<h1 class="text-center my-2 display-4 text-glow">Welcome to Tano Wallet</h1>
+
+	<!-- Action buttons -->
+	<div
+		class="d-flex justify-content-center align-items-center"
+		id="button-header"
+	>
+		<button class="pay-button shadow-lg mx-5 my-5 fs-5 fw-bold" on:click={pay}
+			>Pay</button
+		>
+		<button class="swap-button shadow-lg mx-5 my-5 fs-5 fw-bold"
+		><a href="https://app.symbiosis.finance/swap">Swap</a></button
+	>
+	</div>
+
+	<!-- Footer -->
+	<footer class="text-center w-100 py-5 bg-footer-gradient">
+		<h4 class="text-shadow footer-text">Powered By Tano</h4>
+	</footer>
 </main>
 
 <style>
-/* General Styles */
-/* General Styles */
-body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-}
+	/* Gradient background for the main container */
 
-/* Keep header at the top and ensure items are on the same line */
-header {
-    background-color: white;
-    color: black;
-    padding: 10px 0;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
-}
-
-/* Align TANO text to the start and "Connect Wallet" button to the end */
-.logo {
-    flex: 1; /* Allow TANO text to take available space */
-}
-
-.header-button-section {
-    display: flex;
-    gap: 1rem; /* Space between buttons */
-}
-
-.connect-wallet-btn {
-    background-color: #FF5A3C; /* Button color */
-    color: white; /* Text color */
-    border: none; /* Remove border */
-    border-radius: 50px; /* Rounded corners */
-    font-size: 0.8rem; /* Smaller font size */
-    
-    text-decoration: none; /* Remove underline */
-    transition: all 0.3s ease; /* Smooth transition */
-   
-    font-weight: bold; /* Bold text */
-}
-
-
-
-/* Button hover effect */
-.connect-wallet-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Background Gradient for main content */
-.main-content {
-    background: linear-gradient(135deg, #FF5A3C, #FF8442);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Center the hero section in the remaining space below the header */
-.hero-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    padding: 2rem;
-}
-
-/* Button styles */
-.pay-button,
-.swap-button {
-    background-color: #FF5A3C;
-    color: white;
-    border-radius: 50px;
-    padding: 1rem 2rem;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-	
-	
-}
-
-.swap-button a {
-    text-decoration: none;
-    color: white;
-}
-
-.pay-button {
-    background-color: black;
-}
-
-.swap-button {
-    background-color: black;
-}
-
-.pay-button:hover,
-.swap-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Typography */
-.display-4 {
-    font-size: 3rem;
-    font-weight: bold;
-}
-
-.lead {
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-	.connect-wallet-btn{
-		display: flex;
-		flex-direction: column;
-		justify-content: end;
-	}
-    .display-4 {
-        font-size: 2rem;
-    }
-	.logo-text{
-		font-size: small;
-       
-	}
-    .hero-section {
-        padding: 2rem 1rem;
-    }
-    header {
-		display: flex;
-        flex-direction: column; /* Stack items vertically on small screens */
-        padding: 1rem; /* Adjust padding */
-    }
-	.logo-text{
-		display: flex;
-        flex-direction: column;
-		align-items: start;
-		font-weight: 600;
+	.text-glow {
+		color:black;
+		font-weight: 400;
 	
 	}
-    .header-button-section {
 
-		display: flex;
-        flex-direction: column;
-        /* Make button section full width */
-		align-items: start; /* Align buttons to end */
+	#button-header{
+		margin-top: 20px;
+	}
+
+	/* Gradient animation */
+	@keyframes gradientBG {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+
+   .footer-text{
+	color:black;
+   }
+	/* Shading effect for the text */
+
+	/* Button styles */
+	.connect-button,
+	.pay-button , .swap-button {
+		background: linear-gradient(45deg, #ff6f61, #ff9a8b);
+		border: none;
+		border-radius: 50px;
+		padding: 0.7rem 1.5rem;
+		color: white;
+		font-weight: bold;
+		cursor: pointer;
+	   
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+    a {
+		text-decoration: none;
+		color: white;
+	}
+	.connect-button:hover,
+	.pay-button:hover ,.swap-button::hover{
+		transform: translateY(-3px);
+		box-shadow: 0px 5px 20px rgba(255, 105, 135, 0.4);
+	}
+
+
 	
-    }
-}
 
+
+
+	/* For mobile responsiveness */
+	@media (max-width: 768px) {
+		.display-4 {
+			font-size: 2.5rem;
+		}
+		.connect-button,
+		.pay-button {
+			padding: 0.6rem 1.2rem;
+		}
+	}
 </style>
