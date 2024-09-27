@@ -201,6 +201,7 @@
 			// } else {
 			// 	console.error("Failed to get BOC.");
 			// }
+			
 		} catch (error) {
 			console.log("error while paying tx: ", error);
 		}
