@@ -17,7 +17,7 @@
 	 */
 	let charge = null;
 	let telegramUsername = null;
-	console.log("base uri : ", PUBLIC_BACKEND_BASE_URI);
+	// console.log("base uri : ", PUBLIC_BACKEND_BASE_URI);
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
@@ -234,7 +234,9 @@
 		};
 	}
 </script>
-
+<head>
+	<meta name="cryptomus" content="325c5b63" />
+</head>
 <main class="container-fluid main-content text-white">
     <!-- Header -->
     <header class="d-flex flex-wrap align-items-center py-2 px-3">
@@ -253,7 +255,10 @@
         <p class="lead">Seamless, decentralized storage and AI-driven insights</p>
         <!-- Pay and Swap Buttons -->
         <div class="d-flex justify-content-center align-items-center mt-4 button-container">
-            <button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay</button>
+             <div class="d-flex">
+				<button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay Using Crypto</button>
+				<!-- <button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay Using Credit Card</button> -->
+			 </div>
             <button id="swap" class="swap-button btn btn-secondary swap-button mx-2"><a href="https://app.symbiosis.finance/swap">Swap</a></button>
         </div>
     </section>
@@ -262,11 +267,7 @@
 <style>
 /* General Styles */
 /* General Styles */
-body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-}
+
 
 /* Keep header at the top and ensure items are on the same line */
 header {
