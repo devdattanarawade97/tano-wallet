@@ -5,6 +5,7 @@
 	import { PUBLIC_CREDIT_ADDRESS } from "$env/static/public";
 	import { PUBLIC_BACKEND_BASE_URI } from "$env/static/public";
 	import { goto } from "$app/navigation";
+  
 	/**
 	 * @type {TonConnectUI}
 	 */
@@ -17,16 +18,17 @@
 	 */
 	let charge = null;
 	let telegramUsername = null;
+	
 	// console.log("base uri : ", PUBLIC_BACKEND_BASE_URI);
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
 		const urlParams = new URLSearchParams(window.location.search);
 		chatId = urlParams.get("chat_id");
-		
+
 		charge = urlParams.get("charge");
 		telegramUsername = urlParams.get("username");
-		
+
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -138,8 +140,8 @@
 					],
 					validUntil: Date.now() + 5 * 60 * 1000, // Transaction expiration time (optional)
 				};
-			} 
-			
+			}
+
 			// else {
 			// 	transaction = {
 			// 		messages: [
@@ -178,7 +180,7 @@
 				// console.log("tx status ", transactionHash);
 				// if (txstatus == "finalized"||txstatus=="still pending") {
 				// const { transactionId, userId, status , msgText ,model} = req.body;
-			 if (charge !== null) {
+				if (charge !== null) {
 					const chargeResponse = await fetch(
 						`${PUBLIC_BACKEND_BASE_URI}/update-lastused`,
 						{
@@ -201,7 +203,6 @@
 			// } else {
 			// 	console.error("Failed to get BOC.");
 			// }
-			
 		} catch (error) {
 			console.log("error while paying tx: ", error);
 		}
@@ -234,184 +235,209 @@
 		};
 	}
 </script>
+
 <head>
 	<meta name="cryptomus" content="325c5b63" />
 </head>
 <main class="container-fluid main-content text-white">
-    <!-- Header -->
-    <header class="d-flex flex-wrap align-items-center py-2 px-3">
-        <div class="logo">
-            <!-- <img src="logo.png" alt="Logo" height="40"> -->
-            <p class="display-5 logo-text">TANO</p>
-        </div>
-        <div class="d-flex align-items-center header-button-section">
-            <button id="ton-connect" class="btn btn-primary connect-wallet-btn"></button>
-        </div>
-    </header>
+	<!-- Header -->
+	<header class="d-flex flex-wrap align-items-center py-2 px-3">
+		<div class="logo">
+			<!-- <img src="logo.png" alt="Logo" height="40"> -->
+			<p class="display-5 logo-text">TANO</p>
+		</div>
+		<div class="d-flex align-items-center header-button-section">
+			<button id="ton-connect" class="btn btn-primary connect-wallet-btn"
+			></button>
+		</div>
+	</header>
 
-    <!-- Main Section -->
-    <section class="text-center hero-section my-5">
-        <h1 class="display-4">Maximizing AI-Powered Solution,<br>Only at TANO.</h1>
-        <p class="lead">Seamless, decentralized storage and AI-driven insights</p>
-        <!-- Pay and Swap Buttons -->
-        <div class="d-flex justify-content-center align-items-center mt-4 button-container">
-             <div class="d-flex">
-				<button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay Using Crypto</button>
-				<!-- <button id="pay" class="pay-button btn btn-primary pay-button mx-2" on:click={pay}>Pay Using Credit Card</button> -->
-			 </div>
-            <button id="swap" class="swap-button btn btn-secondary swap-button mx-2"><a href="https://app.symbiosis.finance/swap">Swap</a></button>
-        </div>
-    </section>
+	<!-- Main Section -->
+	<section class="text-center hero-section my-3">
+		<h1 class="display-4">
+			Maximizing AI-Powered Solution,<br />Only at TANO.
+		</h1>
+		<p class="lead">Seamless, decentralized storage and AI-driven insights</p>
+
+		<!-- Pay and Swap Buttons -->
+		<div
+			class="d-flex justify-content-center align-items-center mt-4 button-container"
+		>
+			<button
+				id="pay"
+				class="pay-button btn btn-primary pay-button mx-2"
+				on:click={pay}>Pay Using Crypto</button
+			>
+
+			<button id="swap" class="swap-button btn btn-secondary swap-button mx-2"
+				><a href="https://app.symbiosis.finance/swap">Swap</a></button
+			>
+		</div>
+	</section>
 </main>
 
 <style>
-/* General Styles */
-/* General Styles */
+	/* General Styles */
+	/* General Styles */
 
+	/* Keep header at the top and ensure items are on the same line */
+	header {
+		background-color: white;
+		color: black;
+		padding: 10px 0;
+		border-radius: 10px;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+	}
 
-/* Keep header at the top and ensure items are on the same line */
-header {
-    background-color: white;
-    color: black;
-    padding: 10px 0;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
-}
+	/* Align TANO text to the start and "Connect Wallet" button to the end */
+	.logo {
+		flex: 1; /* Allow TANO text to take available space */
+	}
 
-/* Align TANO text to the start and "Connect Wallet" button to the end */
-.logo {
-    flex: 1; /* Allow TANO text to take available space */
-}
+	.header-button-section {
+		display: flex;
+		gap: 1rem; /* Space between buttons */
+	}
 
-.header-button-section {
-    display: flex;
-    gap: 1rem; /* Space between buttons */
-}
+	.connect-wallet-btn {
+		background-color: #ff5a3c; /* Button color */
+		color: white; /* Text color */
+		border: none; /* Remove border */
+		border-radius: 50px; /* Rounded corners */
+		font-size: 0.8rem; /* Smaller font size */
 
-.connect-wallet-btn {
-    background-color: #FF5A3C; /* Button color */
-    color: white; /* Text color */
-    border: none; /* Remove border */
-    border-radius: 50px; /* Rounded corners */
-    font-size: 0.8rem; /* Smaller font size */
-    
-    text-decoration: none; /* Remove underline */
-    transition: all 0.3s ease; /* Smooth transition */
-   
-    font-weight: bold; /* Bold text */
-}
+		text-decoration: none; /* Remove underline */
+		transition: all 0.3s ease; /* Smooth transition */
 
+		font-weight: bold; /* Bold text */
+	}
 
+	/* Button hover effect */
+	.connect-wallet-btn:hover {
+		transform: translateY(-3px);
+		box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+	}
 
-/* Button hover effect */
-.connect-wallet-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Background Gradient for main content */
-.main-content {
-    background: linear-gradient(135deg, #FF5A3C, #FF8442);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Center the hero section in the remaining space below the header */
-.hero-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    padding: 2rem;
-}
-
-/* Button styles */
-.pay-button,
-.swap-button {
-    background-color: #FF5A3C;
-    color: white;
-    border-radius: 50px;
-    padding: 1rem 2rem;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-	
-	
-}
-
-.swap-button a {
-    text-decoration: none;
-    color: white;
-}
-
-.pay-button {
-    background-color: black;
-}
-
-.swap-button {
-    background-color: black;
-}
-
-.pay-button:hover,
-.swap-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Typography */
-.display-4 {
-    font-size: 3rem;
-    font-weight: bold;
-}
-
-.lead {
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-	.connect-wallet-btn{
+	/* Background Gradient for main content */
+	.main-content {
+		background: linear-gradient(135deg, #ff5a3c, #ff8442);
+		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
-		justify-content: end;
 	}
-    .display-4 {
-        font-size: 2rem;
-    }
-	.logo-text{
-		font-size: small;
-       
-	}
-    .hero-section {
-        padding: 2rem 1rem;
-    }
-    header {
-		display: flex;
-        flex-direction: column; /* Stack items vertically on small screens */
-        padding: 1rem; /* Adjust padding */
-    }
-	.logo-text{
-		display: flex;
-        flex-direction: column;
-		align-items: start;
-		font-weight: 600;
-	
-	}
-    .header-button-section {
 
+	/* Center the hero section in the remaining space below the header */
+	.hero-section {
+		flex: 1;
 		display: flex;
-        flex-direction: column;
-        /* Make button section full width */
-		align-items: start; /* Align buttons to end */
-	
-    }
-}
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		text-align: center;
+		padding: 2rem;
+	}
 
+	/* Button styles */
+	.pay-button,
+	.swap-button {
+		background-color: #ff5a3c;
+		color: white;
+		border-radius: 50px;
+		padding: 1rem 2rem;
+		font-size: 0.9rem;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.swap-button a {
+		text-decoration: none;
+		color: white;
+	}
+
+	.pay-button {
+		background-color: black;
+	}
+
+	.swap-button {
+		background-color: black;
+	}
+
+	.pay-button:hover,
+	.swap-button:hover {
+		transform: translateY(-3px);
+		box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	/* Typography */
+	.display-4 {
+		font-size: 3rem;
+		font-weight: bold;
+	}
+
+	.lead {
+		font-size: 1.2rem;
+		font-weight: 400;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.connect-wallet-btn {
+			display: flex;
+			flex-direction: column;
+			justify-content: end;
+		}
+		.display-4 {
+			font-size: 2rem;
+		}
+		.logo-text {
+			font-size: small;
+		}
+		.hero-section {
+			padding: 2rem 1rem;
+		}
+		header {
+			display: flex;
+			flex-direction: column; /* Stack items vertically on small screens */
+			padding: 1rem; /* Adjust padding */
+		}
+		.logo-text {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			font-weight: 600;
+		}
+		.header-button-section {
+			display: flex;
+			flex-direction: column;
+			/* Make button section full width */
+			align-items: start; /* Align buttons to end */
+		}
+	}
+	/* Styling the QR code container */
+	#qrcode {
+		display: block;
+		margin: 0 auto; /* Centering the QR code */
+		padding: 1rem;
+		border: 2px solid #ddd; /* Optional: Add a border around the QR code */
+		border-radius: 8px; /* Optional: Rounded corners */
+		background-color: #f8f9fa; /* Optional: Light background for the QR code */
+		width: fit-content;
+	}
+
+	/* QR code image (when using base64 images) */
+	img {
+		max-width: 100%; /* Ensures QR code is responsive */
+		height: auto;
+		width: 128px; /* Set the desired width and height */
+	}
+
+	/* Mobile responsiveness */
+	@media (max-width: 768px) {
+		img {
+			width: 100px; /* Adjust the size of the QR code for smaller screens */
+		}
+	}
 </style>
