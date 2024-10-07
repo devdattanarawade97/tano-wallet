@@ -6,6 +6,7 @@
 	import { PUBLIC_BACKEND_BASE_URI } from "$env/static/public";
 	import { goto } from "$app/navigation";
   
+	
 	/**
 	 * @type {TonConnectUI}
 	 */
