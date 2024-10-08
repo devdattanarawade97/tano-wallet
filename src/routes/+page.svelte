@@ -29,7 +29,7 @@
 
 		charge = urlParams.get("charge");
 		telegramUsername = urlParams.get("username");
-
+        //ton connect configuration
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -108,6 +108,7 @@
 		});
 	});
 
+	//pay function
 	async function pay() {
 		try {
 			// await fetchGasFee(); // Fetch the gas fee when the wallet is connected
