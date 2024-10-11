@@ -5,8 +5,7 @@
 	import { PUBLIC_CREDIT_ADDRESS } from "$env/static/public";
 	import { PUBLIC_BACKEND_BASE_URI } from "$env/static/public";
 	import { goto } from "$app/navigation";
-  
-	
+
 	/**
 	 * @type {TonConnectUI}
 	 */
@@ -19,9 +18,10 @@
 	 */
 	let charge = null;
 	let telegramUsername = null;
-	
+
 	// console.log("base uri : ", PUBLIC_BACKEND_BASE_URI);
 	//http://localhost:5173/?chat_id=5831161789&msg_text=hello&model=gpt
+
 	onMount(() => {
 		// Initialize TonConnectUI after component is mounted
 		const urlParams = new URLSearchParams(window.location.search);
@@ -29,7 +29,7 @@
 
 		charge = urlParams.get("charge");
 		telegramUsername = urlParams.get("username");
-        //ton connect configuration
+		//ton connect configuration
 		tonConnectUI = new TonConnectUI({
 			manifestUrl: "https://tano-wallet.vercel.app/tonconnect-manifest.json",
 			buttonRootId: "ton-connect",
@@ -238,9 +238,6 @@
 	}
 </script>
 
-<head>
-	<meta name="cryptomus" content="325c5b63" />
-</head>
 <main class="container-fluid main-content text-white">
 	<!-- Header -->
 	<header class="d-flex flex-wrap align-items-center py-2 px-3">
@@ -416,30 +413,6 @@
 			flex-direction: column;
 			/* Make button section full width */
 			align-items: start; /* Align buttons to end */
-		}
-	}
-	/* Styling the QR code container */
-	#qrcode {
-		display: block;
-		margin: 0 auto; /* Centering the QR code */
-		padding: 1rem;
-		border: 2px solid #ddd; /* Optional: Add a border around the QR code */
-		border-radius: 8px; /* Optional: Rounded corners */
-		background-color: #f8f9fa; /* Optional: Light background for the QR code */
-		width: fit-content;
-	}
-
-	/* QR code image (when using base64 images) */
-	img {
-		max-width: 100%; /* Ensures QR code is responsive */
-		height: auto;
-		width: 128px; /* Set the desired width and height */
-	}
-
-	/* Mobile responsiveness */
-	@media (max-width: 768px) {
-		img {
-			width: 100px; /* Adjust the size of the QR code for smaller screens */
 		}
 	}
 </style>
